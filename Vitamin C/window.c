@@ -9,7 +9,7 @@ void create_window( const string_t title,int x,int y,
 	int width,int height,bool_t fullscreen )
 {
 	int flags = 0;
-	if( fullscreen ) flags = SDL_WINDOW_FULLSCREEN;
+	// if( fullscreen ) flags = SDL_WINDOW_FULLSCREEN;
 
 	if( SDL_Init( SDL_INIT_EVERYTHING ) == 0 )
 	{
@@ -34,6 +34,12 @@ void create_window( const string_t title,int x,int y,
 	else
 	{
 		window_running = FALSE;
+	}
+
+	if( fullscreen )
+	{
+		SDL_SetWindowFullscreen( window,
+			SDL_WINDOW_FULLSCREEN_DESKTOP );
 	}
 }
 
