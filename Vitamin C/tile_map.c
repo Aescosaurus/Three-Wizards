@@ -3,11 +3,12 @@
 #include <stdio.h>
 #include <assert.h>
 
-tile_type* tile_map_data = NULL;
+int* tile_map_data = NULL;
 
 void create_map( const string_t path )
 {
-	tile_map_data = malloc( N_X_TILES * N_Y_TILES * sizeof( tile_type ) );
+	tile_map_data = ( int* )malloc( N_X_TILES *
+		N_Y_TILES * sizeof( int ) );
 	load_map( path );
 }
 
@@ -21,8 +22,6 @@ void load_map( const string_t path )
 	FILE* map_file = NULL;
 	int data_counter = 0;
 
-	free( tile_map_data );
-
 	if( fopen_s( &map_file,path,"r" ) != 0 )
 	{
 		printf( "Failed to load file: %s",path );
@@ -35,9 +34,8 @@ void load_map( const string_t path )
 	{
 		switch( c )
 		{
-		case ( char )tile_empty:
-		case ( char )tile_wall:
-			tile_map_data[data_counter] = ( tile_type )c;
+		case '0': case '1':
+			tile_map_data[data_counter++] = c - '0';
 			break;
 		case '\n':
 			break;
@@ -46,7 +44,7 @@ void load_map( const string_t path )
 			break;
 		}
 
-		++data_counter;
+		assert( data_counter <= N_X_TILES * N_Y_TILES );
 	}
 
 	fclose( map_file );
@@ -58,7 +56,7 @@ void draw_map()
 	{
 		for( int x = 0; x < N_X_TILES; ++x )
 		{
-			color_t col = ( get_tile( x,y ) == tile_empty )
+			color_t col = ( get_tile( x,y ) == 0 )
 				? color_black() : color_blue();
 
 			draw_rect( x * TILE_SIZE,y * TILE_SIZE,
@@ -67,7 +65,7 @@ void draw_map()
 	}
 }
 
-tile_type get_tile( int x,int y )
+int get_tile( int x,int y )
 {
 	return( tile_map_data[y * N_X_TILES + x] );
 }
