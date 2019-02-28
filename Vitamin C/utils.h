@@ -11,5 +11,6 @@ typedef char* string_t;
 
 // Easier way to say unsigned types.
 typedef unsigned char uchar;
+typedef unsigned int uint;
 
 #endif

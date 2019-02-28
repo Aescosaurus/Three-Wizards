@@ -151,6 +151,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="colors.c" />
+    <ClCompile Include="enemy_handler.c" />
     <ClCompile Include="game.c" />
     <ClCompile Include="graphics.c" />
     <ClCompile Include="keyboard.c" />
@@ -158,10 +159,12 @@
     <ClCompile Include="mouse.c" />
     <ClCompile Include="sound.c" />
     <ClCompile Include="tile_map.c" />
+    <ClCompile Include="vector.c" />
     <ClCompile Include="window.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="colors.h" />
+    <ClInclude Include="enemy_handler.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="keyboard.h" />
@@ -169,6 +172,7 @@
     <ClInclude Include="sound.h" />
     <ClInclude Include="tile_map.h" />
     <ClInclude Include="utils.h" />
+    <ClInclude Include="vector.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
