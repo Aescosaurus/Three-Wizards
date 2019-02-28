@@ -19,12 +19,15 @@ vector_t vector_create( int start_size,int elem_size )
 void vector_delete( vector_t* vec )
 {
 	free( vec->data );
+	vec->data = NULL;
 }
 
 void vector_add_element( vector_t* vec,void* element )
 {
 	// Use char* for char(1 byte long) math.
 	char* pos = vec->data;
+	
+	// Copy new element data into char array.
 	pos += vec->cur_pos * vec->elem_size;
 	memcpy( pos,element,vec->elem_size );
 	free( element ); // Important!
@@ -34,6 +37,7 @@ void vector_add_element( vector_t* vec,void* element )
 	// Resize array if we need to.
 	if( vec->cur_pos >= vec->capacity )
 	{
+		// Allocate new memory twice the size of original.
 		const int orig_size = ( int )vec->capacity;
 		char* temp = ( char* )malloc( vec->capacity *
 			vec->elem_size * 2 );
@@ -48,10 +52,11 @@ void vector_add_element( vector_t* vec,void* element )
 			temp[i] = vec->data[i];
 		}
 
-		free( vec->data );
+		free( vec->data ); // Important!
 
 		// SHALLOW copy works here! :D
 		vec->data = temp;
+		temp = NULL;
 	}
 }
 
@@ -59,10 +64,10 @@ void* vector_at( vector_t* vec,int index )
 {
 	assert( index < ( int )vec->capacity );
 
-	return( &vec->data[index * vec->elem_size] );
+	return( &( vec->data[index * vec->elem_size] ) );
 }
 
-uint vector_count( vector_t* vec )
+uint vector_count( const vector_t* vec )
 {
 	return( vec->cur_pos );
 }

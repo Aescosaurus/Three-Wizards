@@ -20,6 +20,7 @@ void create_map( const string_t path )
 void destroy_map()
 {
 	free( tile_map_data );
+	tile_map_data = NULL;
 }
 
 void load_map( const string_t path )
@@ -34,7 +35,7 @@ void load_map( const string_t path )
 	}
 
 	for( char c = fgetc( map_file );
-		c != EOF && data_counter <= TILE_COUNT;
+		c != EOF && data_counter < TILE_COUNT;
 		c = fgetc( map_file ) )
 	{
 		switch( c )
