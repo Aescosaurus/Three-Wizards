@@ -19,6 +19,7 @@ color_t color_gray();
 color_t color_light_gray();
 color_t color_dark_gray();
 color_t color_red();
+color_t color_orange();
 color_t color_yellow();
 color_t color_green();
 color_t color_cyan();

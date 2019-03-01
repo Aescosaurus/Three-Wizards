@@ -42,6 +42,11 @@ color_t color_red()
 	return( make_rgb( 255,0,0 ) );
 }
 
+color_t color_orange()
+{
+	return( make_rgb( 255,127,0 ) );
+}
+
 color_t color_yellow()
 {
 	return( make_rgb( 255,255,0 ) );

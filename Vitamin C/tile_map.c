@@ -3,11 +3,6 @@
 #include <stdio.h>
 #include <assert.h>
 
-// Key:
-//  0 - Empty
-//  1 - Wall
-//  2 - Tower
-//  3 - Path
 char* tile_map_data = NULL;
 
 void create_map( const string_t path )
@@ -40,7 +35,9 @@ void load_map( const string_t path )
 	{
 		switch( c )
 		{
-		case '0': case '1': case '2': case '3':
+		case tile_empty: case tile_wall: case tile_tower:
+		case tile_path: case tile_path_start:
+		case tile_path_end:
 			tile_map_data[data_counter++] = c;
 			break;
 		case '\n':
@@ -69,6 +66,8 @@ void draw_map()
 			case '1': col = color_cyan(); break;
 			case '2': col = color_gray(); break;
 			case '3': col = color_red(); break;
+			case '4': col = color_orange(); break;
+			case '5': col = color_gray(); break;
 			}
 
 			draw_rect( x * TILE_SIZE,y * TILE_SIZE,
@@ -79,5 +78,15 @@ void draw_map()
 
 char get_tile( int x,int y )
 {
+	assert( x >= 0 );
+	assert( x < N_X_TILES );
+	assert( y >= 0 );
+	assert( y < N_Y_TILES );
 	return( tile_map_data[y * N_X_TILES + x] );
+}
+
+bool_t tile_exists( int x,int y )
+{
+	return( x >= 0 && x < N_X_TILES &&
+		y >= 0 && y < N_Y_TILES );
 }
