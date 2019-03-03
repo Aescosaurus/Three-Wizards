@@ -15,22 +15,22 @@ float vec2_get_length( const vec2_t* v )
 	return( sqrtf( ( v->x * v->x ) + ( v->y * v->y ) ) );
 }
 
-vec2_t vec2_add( const vec2_t* lhs,const vec2_t* rhs )
+vec2_t vec2_add( const vec2_t* lhs,vec2_t rhs )
 {
 	vec2_t temp = *lhs;
 
-	temp.x += rhs->x;
-	temp.y += rhs->y;
+	temp.x += rhs.x;
+	temp.y += rhs.y;
 
 	return( temp );
 }
 
-vec2_t vec2_sub( const vec2_t* lhs,const vec2_t* rhs )
+vec2_t vec2_sub( const vec2_t* lhs,vec2_t rhs )
 {
 	vec2_t temp = *lhs;
 
-	temp.x -= rhs->x;
-	temp.y -= rhs->y;
+	temp.x -= rhs.x;
+	temp.y -= rhs.y;
 
 	return( temp );
 }

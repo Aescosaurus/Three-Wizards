@@ -61,24 +61,12 @@ void enemy_handler_init()
 		const rect_t* start_square = vector_at( &path_vec,0 );
 		const rect_t* next_square = vector_at( &path_vec,1 );
 
-		// TODO: Turn all these into vec2_create.
-		en->hitbox.x = start_square->x;
-		en->hitbox.y = start_square->y;
-		en->hitbox.width = 15;
-		en->hitbox.height = 15;
+		en->hitbox = create_rect( start_square->x,
+			start_square->y,15,15 );
 
 		en->cur_tile_index = 1;
 
-		en->target.x = next_square->x;
-		en->target.y = next_square->y;
-
-		en->vel.x = en->target.x - en->hitbox.x;
-		en->vel.y = en->target.y - en->hitbox.y;
-
-		en->vel = vec2_div( &en->vel,
-			vec2_get_length( &en->vel ) );
-
-		en->vel = vec2_mul( &en->vel,ENEMY_MOVE_SPEED );
+		enemy_retarget( en,next_square );
 
 		vector_add_element( &enemy_vec,en );
 	}
@@ -105,19 +93,7 @@ void enemy_handler_update( float dt )
 			const rect_t* next_square = vector_at( &path_vec,
 				cur_enemy->cur_tile_index );
 
-			cur_enemy->target.x = next_square->x;
-			cur_enemy->target.y = next_square->y;
-
-			cur_enemy->vel.x = cur_enemy->target.x -
-				rect_get_center( &cur_enemy->hitbox ).x;
-			cur_enemy->vel.y = cur_enemy->target.y -
-				rect_get_center( &cur_enemy->hitbox ).y;
-
-			cur_enemy->vel = vec2_div( &cur_enemy->vel,
-				vec2_get_length( &cur_enemy->vel ) );
-
-			cur_enemy->vel = vec2_mul( &cur_enemy->vel,
-				ENEMY_MOVE_SPEED );
+			enemy_retarget( cur_enemy,next_square );
 
 			cur_enemy->cur_tile_index += 1;
 		}
@@ -149,6 +125,23 @@ void enemy_handler_draw()
 			( int )cur_enemy->hitbox.height,
 			color_green() );
 	}
+}
+
+void enemy_retarget( enemy_t* en,const rect_t* target )
+{
+	// Set target member to target parameter.
+	en->target = create_vec2( target->x,target->y );
+
+	// Set velocity vector to point towards target.
+	en->vel = vec2_sub( &en->target,
+		rect_get_center( &en->hitbox ) );
+
+	// Normalize length vector.
+	en->vel = vec2_div( &en->vel,
+		vec2_get_length( &en->vel ) );
+
+	// Multiply enemy velocity by speed.
+	en->vel = vec2_mul( &en->vel,ENEMY_MOVE_SPEED );
 }
 
 vec2_t get_next_path_pos( int cur_x,int cur_y,

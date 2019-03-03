@@ -21,6 +21,9 @@ void enemy_handler_destroy();
 void enemy_handler_update( float dt );
 void enemy_handler_draw();
 
+// Set next target location of en to target.
+void enemy_retarget( enemy_t* en,const rect_t* target );
+
 vec2_t get_next_path_pos( int cur_x,int cur_y,
 	vector_t* prev_paths );
 bool_t path_exists_in( int x,int y,vector_t* prev_paths );
