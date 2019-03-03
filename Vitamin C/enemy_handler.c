@@ -109,9 +109,9 @@ void enemy_handler_update()
 			cur_enemy->target.y = next_square->y;
 
 			cur_enemy->vel.x = cur_enemy->target.x -
-				cur_enemy->hitbox.x;
+				rect_get_center( &cur_enemy->hitbox ).x;
 			cur_enemy->vel.y = cur_enemy->target.y -
-				cur_enemy->hitbox.y;
+				rect_get_center( &cur_enemy->hitbox ).y;
 
 			cur_enemy->vel = vec2_div( &cur_enemy->vel,
 				vec2_get_length( &cur_enemy->vel ) );
@@ -130,8 +130,8 @@ void enemy_handler_draw()
 	{
 		const rect_t* temp_rect = vector_at( &path_vec,i );
 		
-		draw_rect( temp_rect->x,temp_rect->y,
-			temp_rect->width,temp_rect->height,
+		draw_rect( ( int )temp_rect->x,( int )temp_rect->y,
+			( int )temp_rect->width,( int )temp_rect->height,
 			make_rgb(
 				i * ( 255 / vector_count( &path_vec ) ),
 				i * ( 255 / vector_count( &path_vec ) ),
