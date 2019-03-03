@@ -90,14 +90,14 @@ void enemy_handler_destroy()
 	vector_delete( &path_vec );
 }
 
-void enemy_handler_update()
+void enemy_handler_update( float dt )
 {
 	for( int i = 0; i < vector_count( &enemy_vec ); ++i )
 	{
 		enemy_t* cur_enemy = vector_at( &enemy_vec,i );
 
-		cur_enemy->hitbox.x += cur_enemy->vel.x;
-		cur_enemy->hitbox.y += cur_enemy->vel.y;
+		cur_enemy->hitbox.x += cur_enemy->vel.x * dt;
+		cur_enemy->hitbox.y += cur_enemy->vel.y * dt;
 
 		if( rect_overlaps_point( &cur_enemy->hitbox,
 			&cur_enemy->target ) )

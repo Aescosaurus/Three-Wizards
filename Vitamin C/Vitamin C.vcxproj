@@ -152,6 +152,7 @@
   <ItemGroup>
     <ClCompile Include="colors.c" />
     <ClCompile Include="enemy_handler.c" />
+    <ClCompile Include="frame_timer.c" />
     <ClCompile Include="game.c" />
     <ClCompile Include="graphics.c" />
     <ClCompile Include="keyboard.c" />
@@ -167,6 +168,7 @@
   <ItemGroup>
     <ClInclude Include="colors.h" />
     <ClInclude Include="enemy_handler.h" />
+    <ClInclude Include="frame_timer.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="keyboard.h" />
