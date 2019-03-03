@@ -1,5 +1,6 @@
 #include "enemy_handler.h"
 #include "tile_map.h"
+#include "random.h"
 
 vector_t enemy_vec;
 vector_t path_vec;
@@ -130,7 +131,13 @@ void enemy_handler_draw()
 void enemy_retarget( enemy_t* en,const rect_t* target )
 {
 	// Set target member to target parameter.
-	en->target = create_vec2( target->x,target->y );
+	// en->target = create_vec2( target->x,target->y );
+	const float rand_x = random_range( target->x,
+		target->x + target->width );
+	const float rand_y = random_range( target->y,
+		target->y + target->height );
+	
+	en->target = create_vec2( rand_x,rand_y );
 
 	// Set velocity vector to point towards target.
 	en->vel = vec2_sub( &en->target,

@@ -5,6 +5,7 @@
 #include "keyboard.h"
 #include "mouse.h"
 #include "sound.h"
+#include "random.h"
 #include "game.h"
 
 int main( int argc,char* argv[] )
@@ -24,6 +25,7 @@ int main( int argc,char* argv[] )
 	init_graphics( get_renderer() );
 	init_colors( get_pixel_format() );
 	init_audio();
+	random_init();
 
 	initialize_game();
 

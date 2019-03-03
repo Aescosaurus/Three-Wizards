@@ -18,7 +18,8 @@ void initialize_game()
 
 void update_model()
 {
-	const float dt = frame_timer_mark();
+	float dt = frame_timer_mark();
+	if( dt > 1.0f ) dt = 0.0f;
 	// printf( "%f\n",dt );
 
 	enemy_handler_update( dt );
