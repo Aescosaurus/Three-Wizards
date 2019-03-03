@@ -77,12 +77,6 @@ void enemy_handler_destroy()
 
 void enemy_handler_update( float dt )
 {
-	if( key_is_pressed( SDLK_SPACE ) &&
-		vector_count( &enemy_vec ) > 0 )
-	{
-		vector_remove_element( &enemy_vec,0 );
-	}
-
 	for( int i = 0; i < vector_count( &enemy_vec ); ++i )
 	{
 		enemy_t* cur_enemy = vector_at( &enemy_vec,i );
@@ -106,7 +100,7 @@ void enemy_handler_update( float dt )
 		if( rect_overlaps( &cur_enemy->hitbox,
 			last_path_tile ) )
 		{
-			// Destroy enemy here.
+			vector_remove_element( &enemy_vec,i );
 			// Lose points or something here.
 		}
 	}
