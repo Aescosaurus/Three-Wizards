@@ -1,5 +1,6 @@
 #include "colors.h"
 #include <assert.h>
+#include "random.h"
 
 const SDL_PixelFormat* colors_pixel_format = NULL;
 
@@ -18,6 +19,15 @@ color_t make_rgb( uchar r,uchar g,uchar b )
 	assert( b <= 256 );
 
 	return( SDL_MapRGB( colors_pixel_format,r,g,b ) );
+}
+
+color_t rand_color()
+{
+	const uint r = ( uint )random_range( 0.0f,255.0f );
+	const uint g = ( uint )random_range( 0.0f,255.0f );
+	const uint b = ( uint )random_range( 0.0f,255.0f );
+
+	return( make_rgb( r,g,b ) );
 }
 
 color_t color_white()

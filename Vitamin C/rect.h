@@ -17,6 +17,7 @@ rect_t create_rect( float x,float y,
 
 bool_t rect_contains_point( const rect_t* r,const vec2_t* v );
 bool_t rect_overlaps_point( const rect_t* r,const vec2_t* v );
+bool_t rect_overlaps( const rect_t* r1,const rect_t* r2 );
 vec2_t rect_get_center( const rect_t* r );
 
 #endif

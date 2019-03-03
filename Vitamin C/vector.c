@@ -60,12 +60,50 @@ void vector_add_element( vector_t* vec,void* element )
 	}
 }
 
+void vector_remove_element( vector_t* vec,int index )
+{
+	assert( vec->cur_pos > 0 );
+
+	// No swapping is necessary.
+	if( vec->cur_pos < 2 )
+	{
+		vector_pop_back( vec );
+	}
+	else // Swap and pop.
+	{
+		const char* last_element = vector_back( vec );
+		char* element_to_remove = vector_at( vec,index );
+
+		for( int i = 0; i < ( int )vec->elem_size; ++i )
+		{
+			element_to_remove[i] = last_element[i];
+		}
+
+		vector_pop_back( vec );
+	}
+}
+
+void vector_pop_back( vector_t* vec )
+{
+	assert( vec->cur_pos > 0 );
+
+	vec->cur_pos -= 1;
+}
+
 void* vector_at( vector_t* vec,int index )
 {
 	assert( vec->cur_pos > 0 );
 	assert( index < ( int )vec->capacity );
 
 	return( &( vec->data[index * vec->elem_size] ) );
+}
+
+void* vector_back( vector_t* vec )
+{
+	assert( vec->cur_pos > 0 );
+
+	return( &( vec->data[( vec->cur_pos - 1 ) *
+		vec->elem_size] ) );
 }
 
 int vector_count( const vector_t* vec )

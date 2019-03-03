@@ -10,8 +10,7 @@ typedef enum
 	tile_wall = '1',
 	tile_tower = '2',
 	tile_path = '3',
-	tile_path_start = '4',
-	tile_path_end = '5'
+	tile_path_start = '4'
 } tile_type;
 
 void create_map( const string_t path );

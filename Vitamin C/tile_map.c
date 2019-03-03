@@ -37,7 +37,6 @@ void load_map( const string_t path )
 		{
 		case tile_empty: case tile_wall: case tile_tower:
 		case tile_path: case tile_path_start:
-		case tile_path_end:
 			tile_map_data[data_counter++] = c;
 			break;
 		case '\n':

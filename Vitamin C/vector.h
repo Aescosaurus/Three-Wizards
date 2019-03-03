@@ -21,10 +21,18 @@ typedef struct
 vector_t vector_create( int start_size,int elem_size );
 // Free memory from a vector.
 void vector_delete( vector_t* vec );
+
 // Takes control of element so you don't have to delete it.
 void vector_add_element( vector_t* vec,void* element );
+// Removes element at index from vec, NOT preserving order.
+void vector_remove_element( vector_t* vec,int index );
+// Remove last element from the vector.
+void vector_pop_back( vector_t* vec );
+
 // Returns a reference to element of vec at index.
 void* vector_at( vector_t* vec,int index );
+// Returns last element of vec.
+void* vector_back( vector_t* vec );
 // Returns number of elements in a vector.
 int vector_count( const vector_t* vec );
 

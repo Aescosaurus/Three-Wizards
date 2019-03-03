@@ -1,9 +1,11 @@
 #include "enemy_handler.h"
 #include "tile_map.h"
 #include "random.h"
+#include "keyboard.h"
 
 vector_t enemy_vec;
 vector_t path_vec;
+const rect_t* last_path_tile = NULL;
 
 void enemy_handler_init()
 {
@@ -15,6 +17,7 @@ void enemy_handler_init()
 	enemy_vec = vector_create( 2,sizeof( enemy_t ) );
 	path_vec = vector_create( 2,sizeof( rect_t ) );
 
+	// Find first tile and put it in path list.
 	for( int y = 0; y < N_Y_TILES; ++y )
 	{
 		for( int x = 0; x < N_X_TILES; ++x )
@@ -34,6 +37,7 @@ void enemy_handler_init()
 		}
 	}
 	
+	// Add entire path to the path list.
 	do
 	{
 		to_add = get_next_path_pos( last_x,last_y,
@@ -56,20 +60,12 @@ void enemy_handler_init()
 		}
 	} while( keep_adding );
 
-	// Test enemy.
+	last_path_tile = vector_back( &path_vec );
+
+	// A few test enemies.
+	for( int i = 0; i < 10; ++i )
 	{
-		enemy_t* en = malloc( sizeof( enemy_t ) );
-		const rect_t* start_square = vector_at( &path_vec,0 );
-		const rect_t* next_square = vector_at( &path_vec,1 );
-
-		en->hitbox = create_rect( start_square->x,
-			start_square->y,15,15 );
-
-		en->cur_tile_index = 1;
-
-		enemy_retarget( en,next_square );
-
-		vector_add_element( &enemy_vec,en );
+		create_enemy();
 	}
 }
 
@@ -81,6 +77,12 @@ void enemy_handler_destroy()
 
 void enemy_handler_update( float dt )
 {
+	if( key_is_pressed( SDLK_SPACE ) &&
+		vector_count( &enemy_vec ) > 0 )
+	{
+		vector_remove_element( &enemy_vec,0 );
+	}
+
 	for( int i = 0; i < vector_count( &enemy_vec ); ++i )
 	{
 		enemy_t* cur_enemy = vector_at( &enemy_vec,i );
@@ -89,7 +91,9 @@ void enemy_handler_update( float dt )
 		cur_enemy->hitbox.y += cur_enemy->vel.y * dt;
 
 		if( rect_overlaps_point( &cur_enemy->hitbox,
-			&cur_enemy->target ) )
+			&cur_enemy->target ) &&
+			cur_enemy->cur_tile_index <=
+			vector_count( &path_vec ) - 1 )
 		{
 			const rect_t* next_square = vector_at( &path_vec,
 				cur_enemy->cur_tile_index );
@@ -97,6 +101,13 @@ void enemy_handler_update( float dt )
 			enemy_retarget( cur_enemy,next_square );
 
 			cur_enemy->cur_tile_index += 1;
+		}
+
+		if( rect_overlaps( &cur_enemy->hitbox,
+			last_path_tile ) )
+		{
+			// Destroy enemy here.
+			// Lose points or something here.
 		}
 	}
 }
@@ -120,12 +131,19 @@ void enemy_handler_draw()
 	{
 		const enemy_t* cur_enemy = vector_at( &enemy_vec,i );
 
-		draw_rect( ( int )cur_enemy->hitbox.x,
-			( int )cur_enemy->hitbox.y,
-			( int )cur_enemy->hitbox.width,
-			( int )cur_enemy->hitbox.height,
-			color_green() );
+		// draw_rect( ( int )cur_enemy->hitbox.x,
+		// 	( int )cur_enemy->hitbox.y,
+		// 	( int )cur_enemy->hitbox.width,
+		// 	( int )cur_enemy->hitbox.height,
+		// 	color_green() );
+		draw_enemy( cur_enemy );
 	}
+
+	draw_rect( ( int )last_path_tile->x,
+		( int )last_path_tile->y,
+		( int )last_path_tile->width,
+		( int )last_path_tile->height,
+		color_yellow() );
 }
 
 void enemy_retarget( enemy_t* en,const rect_t* target )
@@ -149,6 +167,24 @@ void enemy_retarget( enemy_t* en,const rect_t* target )
 
 	// Multiply enemy velocity by speed.
 	en->vel = vec2_mul( &en->vel,ENEMY_MOVE_SPEED );
+}
+
+void create_enemy()
+{
+	enemy_t* en = malloc( sizeof( enemy_t ) );
+	const rect_t* start_square = vector_at( &path_vec,0 );
+	const rect_t* next_square = vector_at( &path_vec,1 );
+
+	en->hitbox = create_rect( start_square->x,
+		start_square->y,15,15 );
+
+	en->cur_tile_index = 1;
+
+	en->draw_col = rand_color();
+
+	enemy_retarget( en,next_square );
+
+	vector_add_element( &enemy_vec,en );
 }
 
 vec2_t get_next_path_pos( int cur_x,int cur_y,
@@ -238,4 +274,13 @@ bool_t path_exists_in( int x,int y,vector_t* prev_paths )
 	}
 
 	return( exists );
+}
+
+void draw_enemy( const enemy_t* en )
+{
+	draw_rect( ( int )en->hitbox.x,
+		( int )en->hitbox.y,
+		( int )en->hitbox.width,
+		( int )en->hitbox.height,
+		en->draw_col );
 }
