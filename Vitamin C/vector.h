@@ -26,6 +26,6 @@ void vector_add_element( vector_t* vec,void* element );
 // Returns a reference to element of vec at index.
 void* vector_at( vector_t* vec,int index );
 // Returns number of elements in a vector.
-uint vector_count( const vector_t* vec );
+int vector_count( const vector_t* vec );
 
 #endif

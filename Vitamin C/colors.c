@@ -1,4 +1,5 @@
 #include "colors.h"
+#include <assert.h>
 
 const SDL_PixelFormat* colors_pixel_format = NULL;
 
@@ -9,6 +10,13 @@ void init_colors( const SDL_PixelFormat* pixel_format )
 
 color_t make_rgb( uchar r,uchar g,uchar b )
 {
+	assert( r >= 0 );
+	assert( g >= 0 );
+	assert( b >= 0 );
+	assert( r <= 256 );
+	assert( g <= 256 );
+	assert( b <= 256 );
+
 	return( SDL_MapRGB( colors_pixel_format,r,g,b ) );
 }
 

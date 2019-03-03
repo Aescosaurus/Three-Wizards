@@ -1,6 +1,7 @@
 #include "rect.h"
 
-rect_t create_rect( int x,int y,int width,int height )
+rect_t create_rect( float x,float y,
+	float width,float height )
 {
 	rect_t temp;
 
@@ -10,4 +11,20 @@ rect_t create_rect( int x,int y,int width,int height )
 	temp.height = height;
 
 	return( temp );
+}
+
+bool_t rect_contains_point( const rect_t* r,const vec2_t* v )
+{
+	return( v->x > r->x &&
+		v->x < r->x + r->width &&
+		v->y > r->y &&
+		v->y < r->y + r->height );
+}
+
+bool_t rect_overlaps_point( const rect_t* r,const vec2_t* v )
+{
+	return( v->x >= r->x &&
+		v->x <= r->x + r->width &&
+		v->y >= r->y &&
+		v->y <= r->y + r->height );
 }

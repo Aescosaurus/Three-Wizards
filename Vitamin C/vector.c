@@ -62,12 +62,13 @@ void vector_add_element( vector_t* vec,void* element )
 
 void* vector_at( vector_t* vec,int index )
 {
+	assert( vec->cur_pos > 0 );
 	assert( index < ( int )vec->capacity );
 
 	return( &( vec->data[index * vec->elem_size] ) );
 }
 
-uint vector_count( const vector_t* vec )
+int vector_count( const vector_t* vec )
 {
-	return( vec->cur_pos );
+	return( ( int )vec->cur_pos );
 }

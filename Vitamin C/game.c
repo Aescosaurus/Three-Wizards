@@ -15,6 +15,7 @@ void initialize_game()
 
 void update_model()
 {
+	enemy_handler_update();
 }
 
 void compose_frame()

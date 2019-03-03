@@ -4,11 +4,16 @@
 #include "vector.h"
 #include "utils.h"
 #include "vec2.h"
+#include "rect.h"
+
+#define ENEMY_MOVE_SPEED 1.4f
 
 typedef struct
 {
-	float x;
-	float y;
+	rect_t hitbox;
+	vec2_t target;
+	vec2_t vel;
+	int cur_tile_index;
 } enemy_t;
 
 void enemy_handler_init();
