@@ -34,6 +34,12 @@ int mouse_get_pos_y()
 	return( mouse_y_position );
 }
 
+vec2_t mouse_get_pos()
+{
+	return( create_vec2( ( float )mouse_get_pos_x(),
+		( float )mouse_get_pos_y() ) );
+}
+
 bool_t mouse_left_is_pressed()
 {
 	return( mouse_left_down );

@@ -162,6 +162,7 @@
     <ClCompile Include="rect.c" />
     <ClCompile Include="sound.c" />
     <ClCompile Include="tile_map.c" />
+    <ClCompile Include="tower_handler.c" />
     <ClCompile Include="vec2.c" />
     <ClCompile Include="vector.c" />
     <ClCompile Include="window.c" />
@@ -173,11 +174,13 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="keyboard.h" />
+    <ClInclude Include="magic_types.h" />
     <ClInclude Include="mouse.h" />
     <ClInclude Include="random.h" />
     <ClInclude Include="rect.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="tile_map.h" />
+    <ClInclude Include="tower_handler.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="vec2.h" />
     <ClInclude Include="vector.h" />

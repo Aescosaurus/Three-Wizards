@@ -60,6 +60,9 @@
     <ClCompile Include="random.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tower_handler.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">
@@ -105,6 +108,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="random.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tower_handler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="magic_types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

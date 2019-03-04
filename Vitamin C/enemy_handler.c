@@ -152,15 +152,15 @@ void enemy_retarget( enemy_t* en,const rect_t* target )
 	en->target = create_vec2( rand_x,rand_y );
 
 	// Set velocity vector to point towards target.
-	en->vel = vec2_sub( &en->target,
+	en->vel = vec2_sub( en->target,
 		rect_get_center( &en->hitbox ) );
 
 	// Normalize length vector.
-	en->vel = vec2_div( &en->vel,
-		vec2_get_length( &en->vel ) );
+	en->vel = vec2_div( en->vel,
+		vec2_get_length( en->vel ) );
 
 	// Multiply enemy velocity by speed.
-	en->vel = vec2_mul( &en->vel,ENEMY_MOVE_SPEED );
+	en->vel = vec2_mul( en->vel,ENEMY_MOVE_SPEED );
 }
 
 void create_enemy()

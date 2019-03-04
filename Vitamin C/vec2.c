@@ -10,14 +10,14 @@ vec2_t create_vec2( float x,float y )
 	return( temp );
 }
 
-float vec2_get_length( const vec2_t* v )
+float vec2_get_length( vec2_t v )
 {
-	return( sqrtf( ( v->x * v->x ) + ( v->y * v->y ) ) );
+	return( sqrtf( ( v.x * v.x ) + ( v.y * v.y ) ) );
 }
 
-vec2_t vec2_add( const vec2_t* lhs,vec2_t rhs )
+vec2_t vec2_add( vec2_t lhs,vec2_t rhs )
 {
-	vec2_t temp = *lhs;
+	vec2_t temp = lhs;
 
 	temp.x += rhs.x;
 	temp.y += rhs.y;
@@ -25,9 +25,9 @@ vec2_t vec2_add( const vec2_t* lhs,vec2_t rhs )
 	return( temp );
 }
 
-vec2_t vec2_sub( const vec2_t* lhs,vec2_t rhs )
+vec2_t vec2_sub( vec2_t lhs,vec2_t rhs )
 {
-	vec2_t temp = *lhs;
+	vec2_t temp = lhs;
 
 	temp.x -= rhs.x;
 	temp.y -= rhs.y;
@@ -35,9 +35,9 @@ vec2_t vec2_sub( const vec2_t* lhs,vec2_t rhs )
 	return( temp );
 }
 
-vec2_t vec2_mul( const vec2_t* lhs,float rhs )
+vec2_t vec2_mul( vec2_t lhs,float rhs )
 {
-	vec2_t temp = *lhs;
+	vec2_t temp = lhs;
 
 	temp.x *= rhs;
 	temp.y *= rhs;
@@ -45,11 +45,11 @@ vec2_t vec2_mul( const vec2_t* lhs,float rhs )
 	return( temp );
 }
 
-vec2_t vec2_div( const vec2_t* lhs,float rhs )
+vec2_t vec2_div( vec2_t lhs,float rhs )
 {
 	assert( rhs != 0.0f );
 
-	vec2_t temp = *lhs;
+	vec2_t temp = lhs;
 
 	temp.x /= rhs;
 	temp.y /= rhs;
