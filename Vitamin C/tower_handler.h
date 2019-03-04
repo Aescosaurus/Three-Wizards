@@ -24,6 +24,7 @@ bool_t attempt_place_tower( tower_t t );
 tower_t create_snowball_tower();
 
 void draw_tower( const tower_t* t );
+void draw_tower_radius( const tower_t* t );
 vec2_t world_pos_2_tile_pos( vec2_t world_pos );
 
 #endif

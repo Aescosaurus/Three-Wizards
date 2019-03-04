@@ -30,6 +30,33 @@ color_t rand_color()
 	return( make_rgb( r,g,b ) );
 }
 
+int get_r( color_t c )
+{
+	Uint8 r;
+	Uint8 g;
+	Uint8 b;
+	SDL_GetRGB( c,colors_pixel_format,&r,&g,&b );
+	return( ( int )r );
+}
+
+int get_g( color_t c )
+{
+	Uint8 g;
+	Uint8 r;
+	Uint8 b;
+	SDL_GetRGB( c,colors_pixel_format,&r,&g,&b );
+	return( ( int )g );
+}
+
+int get_b( color_t c )
+{
+	Uint8 b;
+	Uint8 r;
+	Uint8 g;
+	SDL_GetRGB( c,colors_pixel_format,&r,&g,&b );
+	return( ( int )b );
+}
+
 color_t color_white()
 {
 	return( make_rgb( 255,255,255 ) );

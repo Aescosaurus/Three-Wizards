@@ -42,6 +42,7 @@ void tower_handler_draw()
 	}
 
 	draw_tower( preview_tower );
+	draw_tower_radius( preview_tower );
 }
 
 bool_t attempt_place_tower( tower_t t )
@@ -84,6 +85,34 @@ void draw_tower( const tower_t* t )
 {
 	draw_rect( ( int )t->pos.x,( int )t->pos.y,
 		TILE_SIZE,TILE_SIZE,t->draw_col );
+}
+
+void draw_tower_radius( const tower_t* t )
+{
+	const int grid_x = ( int )t->pos.x / TILE_SIZE;
+	const int grid_y = ( int )t->pos.y / TILE_SIZE;
+	const int rad = ( int )( t->range );
+	const int rad_sq = ( int )( t->range * t->range );
+
+	for( int y = grid_y - rad; y < grid_y + rad; ++y )
+	{
+		for( int x = grid_x - rad; x < grid_x + rad; ++x )
+		{
+			// const vec2_t cur_pos = world_pos_2_tile_pos(
+			// 	create_vec2( ( float )x,( float )y ) );
+			const int x_diff = x - grid_x;
+			const int y_diff = y - grid_y;
+
+			if( x_diff * x_diff + y_diff * y_diff <
+				rad_sq && tile_exists( x,y ) )
+			{
+				draw_rect_alpha( x * TILE_SIZE,
+					y * TILE_SIZE,
+					TILE_SIZE,TILE_SIZE,
+					color_red(),0.2f );
+			}
+		}
+	}
 }
 
 vec2_t world_pos_2_tile_pos( vec2_t world_pos )

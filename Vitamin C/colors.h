@@ -15,6 +15,10 @@ color_t make_rgb( uchar r,uchar g,uchar b );
 // Returns a random color.
 color_t rand_color();
 
+int get_r( color_t c );
+int get_g( color_t c );
+int get_b( color_t c );
+
 // List of pre made colors, feel free to add new ones here.
 color_t color_white();
 color_t color_black();
