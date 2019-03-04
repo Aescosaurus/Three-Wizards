@@ -4,6 +4,7 @@
 #include "vec2.h"
 #include "magic_types.h"
 #include "colors.h"
+#include "utils.h"
 
 typedef struct
 {
@@ -18,8 +19,11 @@ void tower_handler_destroy();
 void tower_handler_update();
 void tower_handler_draw();
 
+bool_t attempt_place_tower( tower_t t );
+
 tower_t create_snowball_tower();
 
-void draw_tower( tower_t* t );
+void draw_tower( const tower_t* t );
+vec2_t world_pos_2_tile_pos( vec2_t world_pos );
 
 #endif

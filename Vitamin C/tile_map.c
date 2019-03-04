@@ -75,6 +75,11 @@ void draw_map()
 	}
 }
 
+void set_tile( int x,int y,tile_type t )
+{
+	tile_map_data[y * N_X_TILES + x] = t;
+}
+
 char get_tile( int x,int y )
 {
 	assert( x >= 0 );

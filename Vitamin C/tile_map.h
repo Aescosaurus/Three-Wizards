@@ -15,8 +15,11 @@ typedef enum
 
 void create_map( const string_t path );
 void destroy_map();
+
 void load_map( const string_t path );
 void draw_map();
+void set_tile( int x,int y,tile_type t );
+
 char get_tile( int x,int y );
 bool_t tile_exists( int x,int y );
 

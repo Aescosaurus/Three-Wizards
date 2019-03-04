@@ -20,6 +20,7 @@ typedef struct
 
 void enemy_handler_init();
 void enemy_handler_destroy();
+
 void enemy_handler_update( float dt );
 void enemy_handler_draw();
 
