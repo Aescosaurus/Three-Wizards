@@ -21,6 +21,8 @@ void update_model()
 	float dt = frame_timer_mark();
 	if( dt > 1.0f ) dt = 0.0f;
 
+	if( tower_menu_is_open() ) dt = 0.0f;
+
 	enemy_handler_update( dt );
 	tower_handler_update();
 }

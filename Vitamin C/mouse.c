@@ -3,6 +3,7 @@
 int mouse_x_position = 0;
 int mouse_y_position = 0;
 bool_t mouse_left_down = FALSE;
+bool_t mouse_right_down = FALSE;
 
 void handle_mouse_event( const SDL_Event* evt )
 {
@@ -16,11 +17,25 @@ void handle_mouse_event( const SDL_Event* evt )
 	// It's important to use an if else if here.
 	if( evt->type == SDL_MOUSEBUTTONDOWN )
 	{
-		mouse_left_down = TRUE;
+		if( evt->button.button == SDL_BUTTON_LEFT )
+		{
+			mouse_left_down = TRUE;
+		}
+		else if( evt->button.button == SDL_BUTTON_RIGHT )
+		{
+			mouse_right_down = TRUE;
+		}
 	}
 	else if( evt->type == SDL_MOUSEBUTTONUP )
 	{
-		mouse_left_down = FALSE;
+		if( evt->button.button == SDL_BUTTON_LEFT )
+		{
+			mouse_left_down = FALSE;
+		}
+		else if( evt->button.button == SDL_BUTTON_RIGHT )
+		{
+			mouse_right_down = FALSE;
+		}
 	}
 }
 
@@ -43,4 +58,9 @@ vec2_t mouse_get_pos()
 bool_t mouse_left_is_pressed()
 {
 	return( mouse_left_down );
+}
+
+bool_t mouse_right_is_pressed()
+{
+	return( mouse_right_down );
 }

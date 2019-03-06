@@ -15,5 +15,7 @@ int mouse_get_pos_y();
 vec2_t mouse_get_pos();
 // Whether the left mouse button is clicked.  True if it is.
 bool_t mouse_left_is_pressed();
+// Whether or not right mouse button is pressed.
+bool_t mouse_right_is_pressed();
 
 #endif
