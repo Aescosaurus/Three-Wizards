@@ -100,8 +100,13 @@ void enemy_handler_update( float dt )
 		if( rect_overlaps( &cur_enemy->hitbox,
 			last_path_tile ) )
 		{
-			vector_remove_element( &enemy_vec,i );
+			cur_enemy->hp = 0;
 			// Lose points or something here.
+		}
+
+		if( cur_enemy->hp < 1 )
+		{
+			vector_remove_element( &enemy_vec,i );
 		}
 	}
 }

@@ -26,7 +26,7 @@ void tower_handler_destroy()
 	vector_delete( &tower_vec );
 }
 
-void tower_handler_update( const vector_t* enemies,
+void tower_handler_update( vector_t* enemies,
 	float dt )
 {
 	if( tower_menu_open )
@@ -57,6 +57,18 @@ void tower_handler_update( const vector_t* enemies,
 			bullet_t* cur_bullet = vector_at( &bullet_vec,i );
 
 			update_bullet( cur_bullet,dt );
+
+			for( int i = 0; i < vector_count( enemies ); ++i )
+			{
+				enemy_t* cur_enemy = vector_at( enemies,i );
+
+				if( rect_overlaps( &cur_bullet->hitbox,
+					&cur_enemy->hitbox ) )
+				{
+					cur_enemy->hp -= cur_bullet->damage;
+					cur_bullet->alive = FALSE;
+				}
+			}
 
 			if( !cur_bullet->alive )
 			{
@@ -197,12 +209,10 @@ void update_tower( tower_t* t,const vector_t* enemies,
 	{
 		const enemy_t* closest = find_closest_enemy(
 			t->pos,enemies );
-		const float dist_to_enemy = vec2_get_length(
-			vec2_sub( rect_get_center( &closest->hitbox ),
-			t->pos ) );
 
-		if( closest != NULL && dist_to_enemy < t->range *
-			TILE_SIZE )
+		if( closest != NULL && vec2_get_length(vec2_sub(
+			rect_get_center( &closest->hitbox ),
+			t->pos ) ) < t->range * TILE_SIZE )
 		{
 			vec2_t bullet_vel;
 			timer_reset( &t->refire );
@@ -266,7 +276,7 @@ void create_bullet( tower_type type,vec2_t pos,
 	temp->vel = vel;
 	temp->type = type;
 	temp->col = col;
-	temp->speed = 155.1f; // From 45.1.
+	temp->speed = 255.1f; // From 45.1.
 	temp->lifetimer = create_timer( 0.9f );
 	temp->alive = TRUE;
 	temp->damage = damage;
@@ -356,7 +366,7 @@ const enemy_t* find_closest_enemy( vec2_t pos,
 
 	for( int i = 0; i < vector_count( enemies ); ++i )
 	{
-		const enemy_t* cur_enemy = vector_at( enemies,i );
+		const enemy_t* cur_enemy = vector_cat( enemies,i );
 		const float dist_to_enemy = vec2_get_length(
 			vec2_sub( rect_get_center(
 			&cur_enemy->hitbox ),pos ) );

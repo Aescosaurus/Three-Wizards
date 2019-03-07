@@ -44,7 +44,7 @@ typedef struct
 
 void tower_handler_init();
 void tower_handler_destroy();
-void tower_handler_update( const vector_t* enemies,
+void tower_handler_update( vector_t* enemies,
 	float dt );
 void tower_handler_draw();
 

@@ -98,6 +98,14 @@ void* vector_at( vector_t* vec,int index )
 	return( &( vec->data[index * vec->elem_size] ) );
 }
 
+const void* vector_cat( const vector_t* vec,int index )
+{
+	assert( vec->cur_pos > 0 );
+	assert( index < ( int )vec->capacity );
+
+	return( &( vec->data[index * vec->elem_size] ) );
+}
+
 void* vector_front( vector_t* vec )
 {
 	assert( vec->cur_pos > 0 );
