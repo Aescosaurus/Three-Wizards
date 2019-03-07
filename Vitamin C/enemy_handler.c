@@ -173,8 +173,8 @@ void create_enemy()
 		start_square->y,15,15 );
 
 	en->cur_tile_index = 1;
-
 	en->draw_col = rand_color();
+	en->hp = 10;
 
 	enemy_retarget( en,next_square );
 

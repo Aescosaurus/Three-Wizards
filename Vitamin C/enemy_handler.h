@@ -16,6 +16,7 @@ typedef struct
 	vec2_t vel;
 	int cur_tile_index;
 	color_t draw_col;
+	int hp;
 } enemy_t;
 
 void enemy_handler_init();
