@@ -31,6 +31,8 @@ void vector_pop_back( vector_t* vec );
 
 // Returns a reference to element of vec at index.
 void* vector_at( vector_t* vec,int index );
+// Returns first element of vec.
+void* vector_front( vector_t* vec );
 // Returns last element of vec.
 void* vector_back( vector_t* vec );
 // Returns number of elements in a vector.

@@ -278,3 +278,8 @@ void draw_enemy( const enemy_t* en )
 		( int )en->hitbox.height,
 		en->draw_col );
 }
+
+vector_t* get_enemy_vec()
+{
+	return( &enemy_vec );
+}

@@ -3,6 +3,7 @@
 
 #include "window.h"
 #include "colors.h"
+#include "rect.h"
 
 // Initialize graphics state.
 void init_graphics( SDL_Renderer* rend );
@@ -24,6 +25,7 @@ void draw_rect_alpha( int x,int y,int width,int height,
 // Get pixel format for color functions.
 const SDL_PixelFormat* get_pixel_format();
 color_t get_pixel( int x,int y );
+const rect_t* get_screen_rect();
 
 #define ScreenWidth ( 1920 / 2 )
 #define ScreenHeight ( 1080 / 2 )

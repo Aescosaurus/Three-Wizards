@@ -3,6 +3,7 @@
 
 SDL_Renderer* gfx_renderer = NULL;
 SDL_Surface* screen_surface = NULL;
+rect_t screen_rect_area;
 
 void init_graphics( SDL_Renderer* rend )
 {
@@ -18,6 +19,9 @@ void init_graphics( SDL_Renderer* rend )
 		r_mask,g_mask,b_mask,a_mask );
 
 	SDL_LockSurface( screen_surface );
+
+	screen_rect_area = create_rect( 0.0f,0.0f,
+		ScreenWidth,ScreenHeight );
 }
 
 void begin_frame()
@@ -118,4 +122,9 @@ color_t get_pixel( int x,int y )
 		x * get_pixel_format()->BytesPerPixel;
 
 	return( *( Uint32* )p );
+}
+
+const rect_t* get_screen_rect()
+{
+	return( &screen_rect_area );
 }

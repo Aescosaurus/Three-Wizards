@@ -2,8 +2,11 @@
 #include "vector.h"
 #include "tile_map.h"
 #include "mouse.h"
+#include <assert.h>
+#include "random.h"
 
 vector_t tower_vec;
+vector_t bullet_vec;
 tower_t preview_tower;
 bool_t tower_menu_open = FALSE;
 vec2_t menu_draw_pos;
@@ -11,6 +14,7 @@ vec2_t menu_draw_pos;
 void tower_handler_init()
 {
 	tower_vec = vector_create( 2,sizeof( tower_t ) );
+	bullet_vec = vector_create( 2,sizeof( bullet_t ) );
 	
 	// preview_tower = create_snowball_tower();
 	preview_tower = create_tower( basic_leaf_tower,
@@ -22,7 +26,8 @@ void tower_handler_destroy()
 	vector_delete( &tower_vec );
 }
 
-void tower_handler_update()
+void tower_handler_update( const vector_t* enemies,
+	float dt )
 {
 	if( tower_menu_open )
 	{
@@ -30,12 +35,33 @@ void tower_handler_update()
 	}
 	else
 	{
+		// Tower placement stuff.
 		preview_tower.pos = world_pos_2_tile_pos(
 			mouse_get_pos() );
 
 		if( mouse_left_is_pressed() )
 		{
 			attempt_place_tower( preview_tower );
+		}
+
+		// Update everything.
+		for( int i = 0; i < vector_count( &tower_vec ); ++i )
+		{
+			tower_t* cur_tower = vector_at( &tower_vec,i );
+
+			update_tower( cur_tower,enemies,dt );
+		}
+
+		for( int i = 0; i < vector_count( &bullet_vec ); ++i )
+		{
+			bullet_t* cur_bullet = vector_at( &bullet_vec,i );
+
+			update_bullet( cur_bullet,dt );
+
+			if( !cur_bullet->alive )
+			{
+				vector_remove_element( &bullet_vec,i );
+			}
 		}
 	}
 	
@@ -91,6 +117,13 @@ void tower_handler_draw()
 			draw_tower( t );
 		}
 
+		for( int i = 0; i < vector_count( &bullet_vec ); ++i )
+		{
+			const bullet_t* b = vector_at( &bullet_vec,i );
+
+			draw_bullet( b );
+		}
+
 		draw_tower( &preview_tower );
 		draw_tower_radius( &preview_tower );
 	}
@@ -125,6 +158,7 @@ tower_t create_tower( tower_type type,float x,float y )
 	tower_t tow;
 
 	tow.pos = create_vec2( x,y );
+	tow.type = type;
 
 	switch( type )
 	{
@@ -152,6 +186,113 @@ tower_t create_tower( tower_type type,float x,float y )
 	}
 
 	return( tow );
+}
+
+void update_tower( tower_t* t,const vector_t* enemies,
+	float dt )
+{
+	timer_update( &t->refire,dt );
+
+	if( timer_is_done( &t->refire ) )
+	{
+		const enemy_t* closest = find_closest_enemy(
+			t->pos,enemies );
+		const float dist_to_enemy = vec2_get_length(
+			vec2_sub( rect_get_center( &closest->hitbox ),
+			t->pos ) );
+
+		if( closest != NULL && dist_to_enemy < t->range *
+			TILE_SIZE )
+		{
+			vec2_t bullet_vel;
+			timer_reset( &t->refire );
+
+			switch( t->type )
+			{
+			case basic_leaf_tower:
+				bullet_vel = vec2_sub( rect_get_center(
+					&closest->hitbox ),t->pos );
+
+				if( bullet_vel.x != 0.0f ||
+					bullet_vel.y != 0.0f )
+				{
+					bullet_vel = vec2_div( bullet_vel,
+						vec2_get_length( bullet_vel ) );
+				}
+				break;
+			case snowball_tower:
+				bullet_vel = vec2_sub( rect_get_center(
+					&closest->hitbox ),t->pos );
+
+				if( bullet_vel.x != 0.0f ||
+					bullet_vel.y != 0.0f )
+				{
+					bullet_vel = vec2_div( bullet_vel,
+						vec2_get_length( bullet_vel ) );
+				}
+				break;
+			case flame_spinner_tower:
+				bullet_vel = vec2_sub( rect_get_center(
+					&closest->hitbox ),t->pos );
+
+				if( bullet_vel.x != 0.0f ||
+					bullet_vel.y != 0.0f )
+				{
+					bullet_vel = vec2_div( bullet_vel,
+						vec2_get_length( bullet_vel ) );
+				}
+				break;
+			default:
+				assert( FALSE );
+				break;
+			}
+			create_bullet( t->type,vec2_add( t->pos,
+				create_vec2( TILE_SIZE / 2,
+					TILE_SIZE / 2 ) ),t->draw_col,
+				bullet_vel,( int )random_range(
+				( float )( t->damage.min ),
+				( float )( t->damage.max ) ) );
+		}
+	}
+}
+
+void create_bullet( tower_type type,vec2_t pos,
+	color_t col,vec2_t vel,int damage )
+{
+	bullet_t* temp = malloc( sizeof( bullet_t ) );
+
+	temp->hitbox = create_rect( pos.x,pos.y,
+		BULLET_SIZE,BULLET_SIZE );
+	temp->vel = vel;
+	temp->type = type;
+	temp->col = col;
+	temp->speed = 155.1f; // From 45.1.
+	temp->lifetimer = create_timer( 0.9f );
+	temp->alive = TRUE;
+	temp->damage = damage;
+
+	vector_add_element( &bullet_vec,temp );
+}
+
+void update_bullet( bullet_t* b,float dt )
+{
+	b->hitbox.x += b->vel.x * b->speed * dt;
+	b->hitbox.y += b->vel.y * b->speed * dt;
+
+	timer_update( &b->lifetimer,dt );
+	if( timer_is_done( &b->lifetimer ) ||
+		!rect_contains_rect( &b->hitbox,
+		get_screen_rect() ) )
+	{
+		b->alive = FALSE;
+	}
+}
+
+void draw_bullet( const bullet_t* b )
+{
+	draw_rect( ( int )b->hitbox.x - BULLET_SIZE / 2,
+		( int )b->hitbox.y - BULLET_SIZE / 2,
+		BULLET_SIZE,BULLET_SIZE,b->col );
 }
 
 void draw_tower( const tower_t* t )
@@ -205,4 +346,27 @@ vec2_t world_pos_2_tile_pos( vec2_t world_pos )
 bool_t tower_menu_is_open()
 {
 	return( tower_menu_open );
+}
+
+const enemy_t* find_closest_enemy( vec2_t pos,
+	const vector_t* enemies )
+{
+	const enemy_t* closest = NULL;
+	float dist = 9999.0f;
+
+	for( int i = 0; i < vector_count( enemies ); ++i )
+	{
+		const enemy_t* cur_enemy = vector_at( enemies,i );
+		const float dist_to_enemy = vec2_get_length(
+			vec2_sub( rect_get_center(
+			&cur_enemy->hitbox ),pos ) );
+
+		if( dist_to_enemy < dist )
+		{
+			closest = cur_enemy;
+			dist = dist_to_enemy;
+		}
+	}
+
+	return( closest );
 }

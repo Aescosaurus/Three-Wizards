@@ -24,7 +24,7 @@ void update_model()
 	if( tower_menu_is_open() ) dt = 0.0f;
 
 	enemy_handler_update( dt );
-	tower_handler_update();
+	tower_handler_update( get_enemy_vec(),dt );
 }
 
 void compose_frame()

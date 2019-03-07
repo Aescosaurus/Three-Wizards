@@ -21,6 +21,14 @@ bool_t rect_contains_point( const rect_t* r,const vec2_t* v )
 		v->y < r->y + r->height );
 }
 
+bool_t rect_contains_rect( const rect_t* r1,const rect_t* r2 )
+{
+	return( r1->x > r2->x &&
+		r1->x + r1->width < r2->x + r2->width &&
+		r1->y > r2->y &&
+		r1->y + r1->height < r2->y + r2->height );
+}
+
 bool_t rect_overlaps_point( const rect_t* r,const vec2_t* v )
 {
 	return( v->x >= r->x &&

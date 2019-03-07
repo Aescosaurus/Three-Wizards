@@ -98,6 +98,13 @@ void* vector_at( vector_t* vec,int index )
 	return( &( vec->data[index * vec->elem_size] ) );
 }
 
+void* vector_front( vector_t* vec )
+{
+	assert( vec->cur_pos > 0 );
+
+	return( &( vec->data[0] ) );
+}
+
 void* vector_back( vector_t* vec )
 {
 	assert( vec->cur_pos > 0 );

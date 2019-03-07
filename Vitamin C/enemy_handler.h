@@ -33,5 +33,6 @@ vec2_t get_next_path_pos( int cur_x,int cur_y,
 	vector_t* prev_paths );
 bool_t path_exists_in( int x,int y,vector_t* prev_paths );
 void draw_enemy( const enemy_t* en );
+vector_t* get_enemy_vec();
 
 #endif
