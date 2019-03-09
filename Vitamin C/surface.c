@@ -63,8 +63,15 @@ surface_t surface_create( const string_t file_path )
 	temp.pixels = vector_create( temp.width * temp.height,
 		sizeof( color_t ) );
 
+	for( int i = 0; i < temp.width * temp.height; ++i )
+	{
+		color_t* col = malloc( sizeof( color_t ) );
+		*col = color_black();
+		vector_add_element( &temp.pixels,col );
+	}
+
 	// Go to the right place in the file.
-	fseek( bitmap_file,0,bmp_file_header.bfOffBits );
+	fseek( bitmap_file,bmp_file_header.bfOffBits,SEEK_SET );
 
 	const int padding = ( 4 - ( temp.width * 3 ) % 4 ) % 4;
 
@@ -78,6 +85,7 @@ surface_t surface_create( const string_t file_path )
 				fgetc( bitmap_file ) ) );
 			if( is_32_b )
 			{
+				assert( FALSE );
 				fseek( bitmap_file,1,SEEK_CUR );
 			}
 		}
@@ -104,7 +112,7 @@ void surface_put_pixel( surface_t* surf,int x,int y,color_t c )
 
 color_t surface_get_pixel( const surface_t * surf,int x,int y )
 {
-	color_t* pixel = vector_at( &surf->pixels,
+	const color_t* pixel = vector_cat( &surf->pixels,
 		y * surf->width + x );
 	return( *pixel );
 }

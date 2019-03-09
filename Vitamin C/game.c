@@ -3,9 +3,10 @@
 #include "enemy_handler.h"
 #include "frame_timer.h"
 #include "tower_handler.h"
+#include "surface.h"
 
 // ---------------User Variables Go Here---------------- //
-
+surface_t test_surf;
 // ----------------------------------------------------- //
 
 void initialize_game()
@@ -14,6 +15,8 @@ void initialize_game()
 	create_map( "Maps/Map1.txt" );
 	enemy_handler_init();
 	tower_handler_init();
+
+	test_surf = surface_create( "Images/Test.bmp" );
 }
 
 void update_model()
@@ -32,6 +35,8 @@ void compose_frame()
 	draw_map();
 	enemy_handler_draw();
 	tower_handler_draw();
+
+	draw_sprite( 15,15,&test_surf );
 }
 
 void destruct_game()
@@ -39,4 +44,5 @@ void destruct_game()
 	destroy_map();
 	enemy_handler_destroy();
 	tower_handler_destroy();
+	surface_destroy( &test_surf );
 }
