@@ -105,6 +105,18 @@ void draw_rect_alpha( int x,int y,int width,int height,
 	}
 }
 
+void draw_sprite( int x,int y,surface_t* surf )
+{
+	for( int y_c = y; y_c < y + surf->height; ++y_c )
+	{
+		for( int x_c = x; x_c < x + surf->width; ++x_c )
+		{
+			put_pixel( x_c,y_c,surface_get_pixel( surf,
+				x_c - x,y_c - y ) );
+		}
+	}
+}
+
 const SDL_PixelFormat* get_pixel_format()
 {
 	return( screen_surface->format );

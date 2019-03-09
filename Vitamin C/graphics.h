@@ -4,6 +4,7 @@
 #include "window.h"
 #include "colors.h"
 #include "rect.h"
+#include "surface.h"
 
 // Initialize graphics state.
 void init_graphics( SDL_Renderer* rend );
@@ -21,6 +22,7 @@ void put_pixel_alpha( int x,int y,color_t c,float alpha );
 void draw_rect( int x,int y,int width,int height,color_t c );
 void draw_rect_alpha( int x,int y,int width,int height,
 	color_t c,float alpha );
+void draw_sprite( int x,int y,surface_t* surf );
 
 // Get pixel format for color functions.
 const SDL_PixelFormat* get_pixel_format();

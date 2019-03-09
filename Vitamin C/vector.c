@@ -37,26 +37,7 @@ void vector_add_element( vector_t* vec,void* element )
 	// Resize array if we need to.
 	if( vec->cur_pos >= vec->capacity )
 	{
-		// Allocate new memory twice the size of original.
-		const int orig_size = ( int )vec->capacity;
-		char* temp = ( char* )malloc( vec->capacity *
-			vec->elem_size * 2 );
-
-		vec->capacity *= 2;
-
-		// Copy data into bigger vector.
-		for( int i = 0;
-			i < orig_size * ( int )vec->elem_size;
-			++i )
-		{
-			temp[i] = vec->data[i];
-		}
-
-		free( vec->data ); // Important!
-
-		// SHALLOW copy works here! :D
-		vec->data = temp;
-		temp = NULL;
+		vector_resize( vec,vec->capacity * 2 );
 	}
 }
 
@@ -88,6 +69,31 @@ void vector_pop_back( vector_t* vec )
 	assert( vec->cur_pos > 0 );
 
 	vec->cur_pos -= 1;
+}
+
+void vector_resize( vector_t* vec,int new_size )
+{
+	// Allocate new memory twice the size of original.
+	const int orig_size = ( int )vec->capacity;
+	char* temp = ( char* )malloc( vec->capacity *
+		vec->elem_size * 2 );
+
+	if( new_size > vec->capacity ) vec->capacity = new_size;
+	else vec->capacity *= 2;
+
+	// Copy data into bigger vector.
+	for( int i = 0;
+		i < orig_size * ( int )vec->elem_size;
+		++i )
+	{
+		temp[i] = vec->data[i];
+	}
+
+	free( vec->data ); // Important!
+
+	// SHALLOW copy works here! :D
+	vec->data = temp;
+	temp = NULL;
 }
 
 void* vector_at( vector_t* vec,int index )

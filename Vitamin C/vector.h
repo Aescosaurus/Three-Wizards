@@ -28,6 +28,8 @@ void vector_add_element( vector_t* vec,void* element );
 void vector_remove_element( vector_t* vec,int index );
 // Remove last element from the vector.
 void vector_pop_back( vector_t* vec );
+// Make enough room for new_size elements.
+void vector_resize( vector_t* vec,int new_size );
 
 // Returns a reference to element of vec at index.
 void* vector_at( vector_t* vec,int index );
