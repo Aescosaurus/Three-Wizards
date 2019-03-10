@@ -6,8 +6,10 @@
 #include "vec2.h"
 #include "rect.h"
 #include "colors.h"
+#include "surface.h"
 
 #define ENEMY_MOVE_SPEED 80.1f
+#define ENEMY_SIZE 15
 
 typedef struct
 {
@@ -17,6 +19,7 @@ typedef struct
 	int cur_tile_index;
 	color_t draw_col;
 	int hp;
+	surface_t surf;
 } enemy_t;
 
 void enemy_handler_init();

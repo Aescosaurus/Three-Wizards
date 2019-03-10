@@ -23,8 +23,7 @@ void put_pixel_alpha( int x,int y,color_t c,float alpha );
 void draw_rect( int x,int y,int width,int height,color_t c );
 void draw_rect_alpha( int x,int y,int width,int height,
 	color_t c,float alpha );
-void draw_sprite( int x,int y,const surface_t* surf );
-void draw_sprite_2( int x,int y,const surface_t* surf,
+void draw_sprite( int x,int y,const surface_t* surf,
 	sprite_effect_t eff );
 
 // Get pixel format for color functions.

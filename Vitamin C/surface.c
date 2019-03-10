@@ -14,6 +14,12 @@ surface_t surface_create( const string_t file_path )
 	BITMAPINFOHEADER bmp_info_header;
 	char* info_header_insert = ( char* )&bmp_info_header;
 
+	// We'll fill these later.
+	int y_start;
+	int y_end;
+	int dy;
+	int padding;
+
 	// Open file and make sure it worked.
 	if( fopen_s( &bitmap_file,file_path,"r" ) != 0 )
 	{
@@ -33,18 +39,12 @@ surface_t surface_create( const string_t file_path )
 		info_header_insert[i] = fgetc( bitmap_file );
 	}
 
-	assert( bmp_info_header.biBitCount == 24 ||
-		bmp_info_header.biBitCount == 32 );
+	assert( bmp_info_header.biBitCount == 24 );
 	assert( bmp_info_header.biCompression == BI_RGB );
-
-	const bool_t is_32_b = bmp_info_header.biBitCount == 32;
 
 	temp.width = bmp_info_header.biWidth;
 
 	// Account for reverse row order or whatever.
-	int y_start;
-	int y_end;
-	int dy;
 	if( bmp_info_header.biHeight < 0 )
 	{
 		temp.height = -bmp_info_header.biHeight;
@@ -73,7 +73,7 @@ surface_t surface_create( const string_t file_path )
 	// Go to the right place in the file.
 	fseek( bitmap_file,bmp_file_header.bfOffBits,SEEK_SET );
 
-	const int padding = ( 4 - ( temp.width * 3 ) % 4 ) % 4;
+	padding = ( 4 - ( temp.width * 3 ) % 4 ) % 4;
 
 	for( int y = y_start; y != y_end; y += dy )
 	{
@@ -83,16 +83,8 @@ surface_t surface_create( const string_t file_path )
 				fgetc( bitmap_file ),
 				fgetc( bitmap_file ),
 				fgetc( bitmap_file ) ) );
-			if( is_32_b )
-			{
-				assert( FALSE );
-				fseek( bitmap_file,1,SEEK_CUR );
-			}
 		}
-		if( !is_32_b )
-		{
-			fseek( bitmap_file,padding,SEEK_CUR );
-		}
+		fseek( bitmap_file,padding,SEEK_CUR );
 	}
 
 	return( temp );
