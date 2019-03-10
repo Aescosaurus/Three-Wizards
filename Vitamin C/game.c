@@ -4,6 +4,7 @@
 #include "frame_timer.h"
 #include "tower_handler.h"
 #include "codex.h"
+#include <assert.h>
 
 // ---------------User Variables Go Here---------------- //
 
@@ -12,10 +13,11 @@
 void initialize_game()
 {
 	frame_timer_init();
+	codex_init();
+
 	create_map( "Maps/Map1.txt" );
 	enemy_handler_init();
 	tower_handler_init();
-	codex_init();
 }
 
 void update_model()

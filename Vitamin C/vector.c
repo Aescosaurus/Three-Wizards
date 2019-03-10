@@ -78,7 +78,10 @@ void vector_resize( vector_t* vec,int new_size )
 	char* temp = ( char* )malloc( vec->capacity *
 		vec->elem_size * 2 );
 
-	if( new_size > vec->capacity ) vec->capacity = new_size;
+	if( new_size > ( int )vec->capacity )
+	{
+		vec->capacity = new_size;
+	}
 	else vec->capacity *= 2;
 
 	// Copy data into bigger vector.

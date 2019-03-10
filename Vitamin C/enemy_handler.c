@@ -2,6 +2,7 @@
 #include "tile_map.h"
 #include "random.h"
 #include "keyboard.h"
+#include "codex.h"
 
 vector_t enemy_vec;
 vector_t path_vec;
@@ -71,12 +72,6 @@ void enemy_handler_init()
 
 void enemy_handler_destroy()
 {
-	for( int i = 0; i < vector_count( &enemy_vec ); ++i )
-	{
-		enemy_t* cur_enemy = vector_at( &enemy_vec,i );
-		surface_destroy( &cur_enemy->surf );
-	}
-
 	vector_delete( &enemy_vec );
 	vector_delete( &path_vec );
 }
@@ -112,7 +107,6 @@ void enemy_handler_update( float dt )
 
 		if( cur_enemy->hp < 1 )
 		{
-			surface_destroy( &cur_enemy->surf );
 			vector_remove_element( &enemy_vec,i );
 		}
 	}
@@ -188,7 +182,8 @@ void create_enemy()
 	en->draw_col = rand_color();
 	en->hp = 10;
 
-	en->surf = surface_create( "Images/LeafEnemy.bmp" );
+	// en->surf = surface_create( "Images/LeafEnemy.bmp" );
+	en->surf = surf_codex_fetch( "Images/LeafEnemy.bmp" );
 
 	enemy_retarget( en,next_square );
 
@@ -292,7 +287,7 @@ void draw_enemy( const enemy_t* en )
 	// 	( int )en->hitbox.height,
 	// 	en->draw_col );
 	draw_sprite( ( int )en->hitbox.x,( int )en->hitbox.y,
-		&en->surf,sprite_effect_chroma( color_magenta() ) );
+		en->surf,sprite_effect_chroma( color_magenta() ) );
 }
 
 vector_t* get_enemy_vec()

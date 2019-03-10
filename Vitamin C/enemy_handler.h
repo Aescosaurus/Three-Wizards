@@ -19,7 +19,7 @@ typedef struct
 	int cur_tile_index;
 	color_t draw_col;
 	int hp;
-	surface_t surf;
+	surface_t* surf;
 } enemy_t;
 
 void enemy_handler_init();

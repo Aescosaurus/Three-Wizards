@@ -13,7 +13,7 @@ void codex_destroy()
 	ordered_map_destroy( &map );
 }
 
-const surface_t* surface_codex_fetch( const string_t file_path )
+surface_t* surf_codex_fetch( const string_t file_path )
 {
 	if( !ordered_map_element_exists( &map,file_path ) )
 	{

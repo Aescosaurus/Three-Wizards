@@ -96,27 +96,6 @@ ordered_map_node_t* ordered_map_find_latest(
 	ordered_map_node_t* start,
 	const ordered_map_pair_t* pair )
 {
-	// ordered_map_node_t* cur = start;
-	// if( cur->left == NULL && cur->right == NULL )
-	// {
-	// 	return( cur );
-	// }
-	// 
-	// if( cur->right != NULL && pair.key > cur->pair.key )
-	// {
-	// 	cur = cur->right;
-	// }
-	// else
-	// {
-	// 	cur = cur->left;
-	// }
-	// 
-	// if( cur->left == NULL )
-	// {
-	// 	return( cur );
-	// }
-	// return( ordered_map_find_latest( cur,pair ) );
-
 	ordered_map_node_t* cur = start;
 
 	if( cur->right != NULL && pair->key >= cur->pair.key )

@@ -7,7 +7,7 @@
 void codex_init();
 void codex_destroy();
 
-const surface_t* surface_codex_fetch( const string_t file_path );
+surface_t* surf_codex_fetch( const string_t file_path );
 // TODO: sound codex fetch
 
 #endif
