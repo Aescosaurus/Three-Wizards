@@ -2,11 +2,12 @@
 #define CODEX_H
 
 #include "utils.h"
+#include "surface.h"
 
 void codex_init();
 void codex_destroy();
 
-void surface_codex_fetch( const string_t file_path );
+const surface_t* surface_codex_fetch( const string_t file_path );
 // TODO: sound codex fetch
 
 #endif
