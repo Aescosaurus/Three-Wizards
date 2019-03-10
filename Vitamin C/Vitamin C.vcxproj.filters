@@ -75,6 +75,12 @@
     <ClCompile Include="sprite_effect.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="codex.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ordered_map.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">
@@ -138,6 +144,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="sprite_effect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="codex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ordered_map.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

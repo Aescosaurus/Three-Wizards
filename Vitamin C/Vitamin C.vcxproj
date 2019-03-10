@@ -150,6 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="codex.c" />
     <ClCompile Include="colors.c" />
     <ClCompile Include="enemy_handler.c" />
     <ClCompile Include="frame_timer.c" />
@@ -158,6 +159,7 @@
     <ClCompile Include="keyboard.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="mouse.c" />
+    <ClCompile Include="ordered_map.c" />
     <ClCompile Include="random.c" />
     <ClCompile Include="range.c" />
     <ClCompile Include="rect.c" />
@@ -172,6 +174,7 @@
     <ClCompile Include="window.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="codex.h" />
     <ClInclude Include="colors.h" />
     <ClInclude Include="enemy_handler.h" />
     <ClInclude Include="frame_timer.h" />
@@ -180,6 +183,7 @@
     <ClInclude Include="keyboard.h" />
     <ClInclude Include="magic_types.h" />
     <ClInclude Include="mouse.h" />
+    <ClInclude Include="ordered_map.h" />
     <ClInclude Include="random.h" />
     <ClInclude Include="range.h" />
     <ClInclude Include="rect.h" />

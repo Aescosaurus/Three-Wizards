@@ -3,9 +3,10 @@
 #include "enemy_handler.h"
 #include "frame_timer.h"
 #include "tower_handler.h"
+#include "ordered_map.h"
 
 // ---------------User Variables Go Here---------------- //
-
+ordered_map_t map;
 // ----------------------------------------------------- //
 
 void initialize_game()
@@ -14,6 +15,13 @@ void initialize_game()
 	create_map( "Maps/Map1.txt" );
 	enemy_handler_init();
 	tower_handler_init();
+
+	map = ordered_map_create();
+	ordered_map_insert( &map,ordered_map_create_pair(
+		"hi","bop" ) );
+
+	const string_t str = ordered_map_find( &map,"hi" );
+	printf( "%s",str );
 }
 
 void update_model()
@@ -39,4 +47,6 @@ void destruct_game()
 	destroy_map();
 	enemy_handler_destroy();
 	tower_handler_destroy();
+
+	ordered_map_destroy( &map );
 }
