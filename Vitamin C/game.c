@@ -19,8 +19,14 @@ void initialize_game()
 	map = ordered_map_create();
 	ordered_map_insert( &map,ordered_map_create_pair(
 		"hi","bop" ) );
+	ordered_map_insert( &map,ordered_map_create_pair(
+		"test","blep" ) );
+	ordered_map_insert( &map,ordered_map_create_pair(
+		"hello","twelve" ) );
+	ordered_map_insert( &map,ordered_map_create_pair(
+		"cup","cake" ) );
 
-	const string_t str = ordered_map_find( &map,"hi" );
+	const string_t str = ordered_map_find( &map,"cup" );
 	printf( "%s",str );
 }
 

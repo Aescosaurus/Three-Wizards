@@ -1,6 +1,7 @@
 #include "ordered_map.h"
 #include <stdlib.h>
 #include <assert.h>
+#include <stdio.h>
 
 ordered_map_t ordered_map_create()
 {
@@ -22,7 +23,14 @@ void ordered_map_insert( ordered_map_t* map,
 	ordered_map_pair_t pair )
 {
 	ordered_map_node_t* latest = ordered_map_find_latest(
-		map->start,pair );
+		map->start,&pair );
+
+	if( ordered_map_element_exists( map,pair.key ) )
+	{
+		printf( "(!) Error, map element with key " );
+		printf( "%s already exists!\n",pair.key );
+		assert( FALSE );
+	}
 
 	if( latest->pair.key == NULL ) // Handle first element.
 	{
@@ -30,7 +38,7 @@ void ordered_map_insert( ordered_map_t* map,
 
 		latest->pair = pair;
 	}
-	else if( pair.key > latest->pair.key )
+	else if( pair.key >= latest->pair.key )
 	{
 		assert( latest->right == NULL );
 
@@ -85,21 +93,43 @@ ordered_map_pair_t ordered_map_create_pair(
 }
 
 ordered_map_node_t* ordered_map_find_latest(
-	ordered_map_node_t* start,ordered_map_pair_t pair )
+	ordered_map_node_t* start,
+	const ordered_map_pair_t* pair )
 {
-	ordered_map_node_t* cur = start;
-	if( cur->left == NULL || cur->right == NULL )
-	{
-		return( cur );
-	}
+	// ordered_map_node_t* cur = start;
+	// if( cur->left == NULL && cur->right == NULL )
+	// {
+	// 	return( cur );
+	// }
+	// 
+	// if( cur->right != NULL && pair.key > cur->pair.key )
+	// {
+	// 	cur = cur->right;
+	// }
+	// else
+	// {
+	// 	cur = cur->left;
+	// }
+	// 
+	// if( cur->left == NULL )
+	// {
+	// 	return( cur );
+	// }
+	// return( ordered_map_find_latest( cur,pair ) );
 
-	if( pair.key > cur->pair.key )
+	ordered_map_node_t* cur = start;
+
+	if( cur->right != NULL && pair->key >= cur->pair.key )
 	{
 		cur = cur->right;
 	}
-	else
+	else if( cur->left != NULL && pair->key < cur->pair.key )
 	{
 		cur = cur->left;
+	}
+	else
+	{
+		return( cur );
 	}
 
 	return( ordered_map_find_latest( cur,pair ) );
@@ -108,8 +138,8 @@ ordered_map_node_t* ordered_map_find_latest(
 ordered_map_node_t* ordered_map_get_match(
 	ordered_map_node_t* start,const string_t name )
 {
-	if( name == start->pair.key ||
-		start == NULL ) // End the cycle.
+	if( start == NULL || // This line must come first.
+		name == start->pair.key ) // End the cycle.
 	{
 		return( start );
 	}

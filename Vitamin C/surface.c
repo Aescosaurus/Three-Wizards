@@ -23,7 +23,7 @@ surface_t surface_create( const string_t file_path )
 	// Open file and make sure it worked.
 	if( fopen_s( &bitmap_file,file_path,"r" ) != 0 )
 	{
-		printf( "Failed to load image: %s",file_path );
+		printf( "(!) Failed to load image: %s",file_path );
 		assert( FALSE );
 	}
 
