@@ -36,7 +36,8 @@ void compose_frame()
 	enemy_handler_draw();
 	tower_handler_draw();
 
-	draw_sprite( 15,15,&test_surf );
+	draw_sprite_2( 60,60,&test_surf,
+		sprite_effect_chroma( color_magenta() ) );
 }
 
 void destruct_game()

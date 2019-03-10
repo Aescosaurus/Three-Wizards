@@ -105,7 +105,7 @@ void draw_rect_alpha( int x,int y,int width,int height,
 	}
 }
 
-void draw_sprite( int x,int y,surface_t* surf )
+void draw_sprite( int x,int y,const surface_t* surf )
 {
 	for( int y_c = y; y_c < y + surf->height; ++y_c )
 	{
@@ -113,6 +113,21 @@ void draw_sprite( int x,int y,surface_t* surf )
 		{
 			put_pixel( x_c,y_c,surface_get_pixel( surf,
 				x_c - x,y_c - y ) );
+		}
+	}
+}
+
+void draw_sprite_2( int x,int y,const surface_t* surf,
+	sprite_effect_t eff )
+{
+	for( int y_c = y; y_c < y + surf->height; ++y_c )
+	{
+		for( int x_c = x; x_c < x + surf->width; ++x_c )
+		{
+			( *( eff.func_to_use.func ) )( x_c,y_c,
+				surface_get_pixel( surf,x_c - x,y_c - y ),
+				get_pixel( x_c,y_c ),
+				eff );
 		}
 	}
 }

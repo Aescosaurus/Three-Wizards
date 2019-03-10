@@ -162,6 +162,7 @@
     <ClCompile Include="range.c" />
     <ClCompile Include="rect.c" />
     <ClCompile Include="sound.c" />
+    <ClCompile Include="sprite_effect.c" />
     <ClCompile Include="surface.c" />
     <ClCompile Include="tile_map.c" />
     <ClCompile Include="timer.c" />
@@ -183,6 +184,7 @@
     <ClInclude Include="range.h" />
     <ClInclude Include="rect.h" />
     <ClInclude Include="sound.h" />
+    <ClInclude Include="sprite_effect.h" />
     <ClInclude Include="surface.h" />
     <ClInclude Include="tile_map.h" />
     <ClInclude Include="timer.h" />

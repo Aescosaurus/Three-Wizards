@@ -72,6 +72,9 @@
     <ClCompile Include="surface.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="sprite_effect.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">
@@ -132,6 +135,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="surface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sprite_effect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
